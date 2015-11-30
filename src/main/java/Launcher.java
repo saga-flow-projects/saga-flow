@@ -62,8 +62,7 @@ public class Launcher {
 
         List<PlayerState> playerTestStates = new ArrayList<>();
         playerTestStates.add(new PlayerState(100, false, 1));
-        playerTestStates.add(new PlayerState(50, true, 1));
-        playerTestStates.add(new PlayerState(90, true, 2));
+        playerTestStates.add(new PlayerState(90, true, 3));
         playerTestStates.add(new PlayerState(30, false, 8));
         playerTestStates.add(new PlayerState(100, true, 8));
         playerTestStates.add(new PlayerState(100, false, 0));

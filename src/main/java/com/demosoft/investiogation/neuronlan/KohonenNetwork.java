@@ -75,13 +75,13 @@ public class KohonenNetwork {
     public void newStudy(PlayerState input, int correctAnswer) {
         Neuron neuron = neurons[correctAnswer];
         Link incomingLink = neuron.incomingLinks.get(0);
-        neuron.incomingLinks.get(0).weight = incomingLink.weight + 0.5 * (input.getHealth() - incomingLink.weight);
+        neuron.incomingLinks.get(0).weight = incomingLink.weight + 0.95 * (input.getHealth() - incomingLink.weight);
 
         incomingLink = neuron.incomingLinks.get(1);
-        neuron.incomingLinks.get(1).weight = incomingLink.weight + 0.5 * (input.isGun() ? 1 : 0 - incomingLink.weight);
+        neuron.incomingLinks.get(1).weight = incomingLink.weight + 0.95 * (input.isGun() ? 1 : 0 - incomingLink.weight);
 
         incomingLink = neuron.incomingLinks.get(2);
-        neuron.incomingLinks.get(2).weight = incomingLink.weight + 0.5 * (input.getEnemies() - incomingLink.weight);
+        neuron.incomingLinks.get(2).weight = incomingLink.weight + 0.95 * (input.getEnemies() - incomingLink.weight);
     }
 
     public void bulkNewStudy(List<PlayerState> input, int correctAnswer) {
