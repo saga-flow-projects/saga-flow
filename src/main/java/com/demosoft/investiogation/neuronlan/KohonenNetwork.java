@@ -52,6 +52,11 @@ public class KohonenNetwork {
             outgoingLink.neuron.power += outgoingLink.weight * input.getEnemies();
         }
 
+        inputNeuron = inputs[2];
+        for (Link outgoingLink : inputNeuron.outgoingLinks) {
+            outgoingLink.neuron.power += outgoingLink.weight * input.getArmor();
+        }
+
 
         int maxIndex = 0;
         for (int i = 1; i < neurons.length; i++) {
@@ -82,6 +87,9 @@ public class KohonenNetwork {
 
         incomingLink = neuron.incomingLinks.get(2);
         neuron.incomingLinks.get(2).weight = incomingLink.weight + 0.95 * (input.getEnemies() - incomingLink.weight);
+
+        incomingLink = neuron.incomingLinks.get(3);
+        neuron.incomingLinks.get(3).weight = incomingLink.weight + 0.95 * (input.getArmor() - incomingLink.weight);
     }
 
     public void bulkNewStudy(List<PlayerState> input, int correctAnswer) {

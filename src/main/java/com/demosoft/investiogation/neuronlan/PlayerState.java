@@ -5,13 +5,15 @@ package com.demosoft.investiogation.neuronlan;
  */
 public class PlayerState {
     private double health;
+    private double armor;
     private boolean gun;
     private int enemies;
 
-    public PlayerState(double health, boolean gun, int enemies) {
-        this.health = health/100;
+    public PlayerState(double health, boolean gun, int enemies, double armor) {
+        this.health = health / 100;
         this.gun = gun;
         this.enemies = enemies;
+        this.armor = armor;
     }
 
     public double getHealth() {
@@ -43,5 +45,11 @@ public class PlayerState {
         this.enemies = enemies;
     }
 
+    public double getArmor() {
+        return armor;
+    }
 
+    public void setArmor(double armor) {
+        this.armor = armor;
+    }
 }

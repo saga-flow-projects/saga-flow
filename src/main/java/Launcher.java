@@ -17,10 +17,11 @@ public class Launcher {
     public static final int ESCAPE = 1;
     public static final int HIDE = 2;
     public static final int NONE = 3;
+    public static final int DEFENCE = 4;
 
     public static void main(String[] args) {
-        Input[] inputs = new Input[3];
-        Neuron[] neurons = new Neuron[4];
+        Input[] inputs = new Input[4];
+        Neuron[] neurons = new Neuron[5];
         Random random = new Random();
         for (int i = 0; i < neurons.length; i++) {
             Neuron neuron = new Neuron();
@@ -37,35 +38,47 @@ public class Launcher {
 
         KohonenNetwork network = new KohonenNetwork(inputs, neurons);
         List<PlayerState> playerAtackStates = new ArrayList<>();
-        playerAtackStates.add(new PlayerState(50, true, 1));
-        playerAtackStates.add(new PlayerState(90, true, 2));
-        playerAtackStates.add(new PlayerState(80, false, 1));
+        playerAtackStates.add(new PlayerState(50, true, 1, 0.0));
+        playerAtackStates.add(new PlayerState(90, true, 2, 0.0));
+        playerAtackStates.add(new PlayerState(80, false, 1, 0.0));
 
         List<PlayerState> playerHideStates = new ArrayList<>();
-        playerHideStates.add(new PlayerState(30, true, 1));
-        playerHideStates.add(new PlayerState(60, true, 2));
-        playerHideStates.add(new PlayerState(40, false, 1));
+        playerHideStates.add(new PlayerState(30, true, 1, 0.0));
+        playerHideStates.add(new PlayerState(60, true, 2, 0.0));
+        playerHideStates.add(new PlayerState(40, false, 1, 0.0));
+        playerHideStates.add(new PlayerState(45, false, 1, 0.0));
+        playerHideStates.add(new PlayerState(40, false, 1, 0.0));
 
         List<PlayerState> playerEscapeStates = new ArrayList<>();
-        playerEscapeStates.add(new PlayerState(90, true, 4));
-        playerEscapeStates.add(new PlayerState(60, true, 4));
-        playerEscapeStates.add(new PlayerState(10, false, 1));
+        playerEscapeStates.add(new PlayerState(90, true, 7, 0.0));
+        playerEscapeStates.add(new PlayerState(60, true, 4, 0.0));
+        playerEscapeStates.add(new PlayerState(10, false, 1, 0.0));
 
         List<PlayerState> playerNoneStates = new ArrayList<>();
-        playerNoneStates.add(new PlayerState(60, true, 0));
-        playerNoneStates.add(new PlayerState(100, false, 0));
+        playerNoneStates.add(new PlayerState(60, true, 0, 0.0));
+        playerNoneStates.add(new PlayerState(100, false, 0, 0.0));
+
+
+        List<PlayerState> playerDefenceStates = new ArrayList<>();
+        playerDefenceStates.add(new PlayerState(50, false, 3, 1.0));
+        playerDefenceStates.add(new PlayerState(70, true, 2, 0.7));
+        playerDefenceStates.add(new PlayerState(60, true, 1, 0.6));
+        playerDefenceStates.add(new PlayerState(100, true, 1, 0.5));
 
         network.bulkNewStudy(playerAtackStates, ATTACK);
-        network.bulkNewStudy(playerHideStates, HIDE);
         network.bulkNewStudy(playerEscapeStates, ESCAPE);
+        network.bulkNewStudy(playerHideStates, HIDE);
         network.bulkNewStudy(playerNoneStates, NONE);
+        network.bulkNewStudy(playerDefenceStates, DEFENCE);
 
         List<PlayerState> playerTestStates = new ArrayList<>();
-        playerTestStates.add(new PlayerState(100, false, 1));
-        playerTestStates.add(new PlayerState(90, true, 3));
-        playerTestStates.add(new PlayerState(30, false, 8));
-        playerTestStates.add(new PlayerState(100, true, 8));
-        playerTestStates.add(new PlayerState(100, false, 0));
+        playerTestStates.add(new PlayerState(100, false, 1, 0.0));
+        playerTestStates.add(new PlayerState(90, true, 3, 0.0));
+        playerTestStates.add(new PlayerState(30, false, 8, 0.0));
+        playerTestStates.add(new PlayerState(100, true, 8, 0.0));
+        playerTestStates.add(new PlayerState(100, false, 0, 0.0));
+
+        playerTestStates.add(new PlayerState(40, false, 1, 1.0));
 
         for (PlayerState playerState : playerTestStates) {
 
@@ -83,6 +96,9 @@ public class Launcher {
                     break;
                 case 3:
                     System.out.println("NONE");
+                    break;
+                case 4:
+                    System.out.println("DEFENCE");
                     break;
                 default:
                     System.out.println("unknown " + network.neurons[index].action);
