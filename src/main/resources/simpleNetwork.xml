@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ntw:network xmlns:ntw="urn:network">
+    <input id="input1">
+        <outgoingLinks neuronId="neuron1" weight="1"/>
+    </input>
+
+    <neuron id="neuron1">
+        <outgoingLinks outputId="output1" weight="1"/>
+        <initPower>0</initPower>
+        <processor className="com.demosoft.investiogation.neuronlan.processor.SimpleProcessor">
+            <param name="value" value="1"/>
+        </processor>
+    </neuron>
+
+    <outputGroup id="outputGroup1">
+        <output id="output1" actionId="1"/>
+    </outputGroup>
+
+    <action id="1" name="Attack"></action>
+</ntw:network>
