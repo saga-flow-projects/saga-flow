@@ -1,0 +1,48 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:network"
+            xmlns:ntw="urn:network">
+    <xsd:complexType name="Neuron">
+        <xsd:sequence>
+            <xsd:element name="outgoingLinks" type="ntw:Link" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="initPower" type="xsd:double" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:attribute name="actionId" type="xsd:string" use="required"/>
+        <xsd:attribute name="id" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Action">
+        <xsd:sequence>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Input">
+        <xsd:sequence>
+            <xsd:element name="outgoingLinks" type="ntw:Link" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Output">
+        <xsd:attribute name="id" type="xsd:string" use="required"/>
+        <xsd:attribute name="actionId" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="OutputGroup">
+        <xsd:sequence>
+            <xsd:element name="outgoingLinks" type="ntw:Output" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="Link">
+        <xsd:attribute name="neuronId" type="xsd:string"/>
+        <xsd:attribute name="inputId" type="xsd:string"/>
+        <xsd:attribute name="outputId" type="xsd:string"/>
+        <xsd:attribute name="weight" type="xsd:int"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Value">
+    </xsd:complexType>
+
+</xsd:schema>
