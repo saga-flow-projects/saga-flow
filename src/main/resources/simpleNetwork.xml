@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ntw:network xmlns:ntw="urn:network">
+
+<ntw:network xmlns:ntw="urn:neuronNetwork">
     <input id="input1">
         <outgoingLinks neuronId="neuron1" weight="1"/>
     </input>

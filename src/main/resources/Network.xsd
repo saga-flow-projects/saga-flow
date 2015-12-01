@@ -1,13 +1,13 @@
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:network"
-            xmlns:ntw="urn:network">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:neuronNetwork"
+            xmlns:ntw="urn:neuronNetwork">
 
     <xsd:element name="network" type="ntw:Network"/>
 
     <xsd:complexType name="Network">
         <xsd:sequence>
-            <xsd:element name="outputGroup" type="ntw:OutputGroup" minOccurs="1" maxOccurs="unbounded"/>
-            <xsd:element name="neuron" type="ntw:Neuron" minOccurs="1" maxOccurs="unbounded"/>
             <xsd:element name="input" type="ntw:Input" minOccurs="1" maxOccurs="unbounded"/>
+            <xsd:element name="neuron" type="ntw:Neuron" minOccurs="1" maxOccurs="unbounded"/>
+            <xsd:element name="outputGroup" type="ntw:OutputGroup" minOccurs="1" maxOccurs="unbounded"/>
             <xsd:element name="action" type="ntw:Action" minOccurs="1" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
