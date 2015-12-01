@@ -1,5 +1,10 @@
 package com.demosoft.investiogation.neuronlan;
 
+import com.demosoft.investiogation.neuronlan.entity.Input;
+import com.demosoft.investiogation.neuronlan.entity.Link;
+import com.demosoft.investiogation.neuronlan.entity.Neuron;
+import com.demosoft.investiogation.neuronlan.entity.PlayerStateRule;
+
 import java.util.List;
 
 /**
@@ -14,28 +19,7 @@ public class KohonenNetwork {
         this.neurons = neurons;
     }
 
-    public KohonenNetwork() {
-    }
-
-    public int handle(int[] input) {
-        for (int i = 0; i < inputs.length; i++) {
-            Input inputNeuron = inputs[i];
-            for (Link outgoingLink : inputNeuron.outgoingLinks) {
-                outgoingLink.neuron.power += outgoingLink.weight * input[i];
-            }
-        }
-        int maxIndex = 0;
-        for (int i = 1; i < neurons.length; i++) {
-            if (neurons[i].power > neurons[maxIndex].power)
-                maxIndex = i;
-        }
-        for (Neuron outputNeuron : neurons) {
-            outputNeuron.power = 0;
-        }
-        return maxIndex;
-    }
-
-    public int newHandle(PlayerState input) {
+    public int newHandle(PlayerStateRule input) {
 
         Input inputNeuron = inputs[0];
         for (Link outgoingLink : inputNeuron.outgoingLinks) {
@@ -69,32 +53,45 @@ public class KohonenNetwork {
         return maxIndex;
     }
 
-    public void study(int[] input, int correctAnswer) {
+    public void newStudy(PlayerStateRule input, int correctAnswer) {
         Neuron neuron = neurons[correctAnswer];
-        for (int i = 0; i < neuron.incomingLinks.size(); i++) {
-            Link incomingLink = neuron.incomingLinks.get(i);
-            incomingLink.weight = incomingLink.weight + 0.5 * (input[i] - incomingLink.weight);
+        Link incomingLink = neuron.incomingLinks.get(0);
+        neuron.incomingLinks.get(0).weight = incomingLink.weight + 0.9 * (input.getHealth() - incomingLink.weight);
+
+        incomingLink = neuron.incomingLinks.get(1);
+        neuron.incomingLinks.get(1).weight = incomingLink.weight + 0.9 * (input.isGun() ? 1 : 0 - incomingLink.weight);
+
+        incomingLink = neuron.incomingLinks.get(2);
+        neuron.incomingLinks.get(2).weight = incomingLink.weight + 0.9 * (input.getEnemies() - incomingLink.weight);
+
+        incomingLink = neuron.incomingLinks.get(3);
+        neuron.incomingLinks.get(3).weight = incomingLink.weight + 0.9 * (input.getArmor() - incomingLink.weight);
+    }
+
+    public void study(PlayerStateRule input) {
+        Neuron neuron = neurons[input.getAction().getCode()];
+        Link incomingLink = neuron.incomingLinks.get(0);
+        neuron.incomingLinks.get(0).weight = incomingLink.weight + 0.9 * (input.getHealth() - incomingLink.weight);
+
+        incomingLink = neuron.incomingLinks.get(1);
+        neuron.incomingLinks.get(1).weight = incomingLink.weight + 0.9 * (input.isGun() ? 1 : 0 - incomingLink.weight);
+
+        incomingLink = neuron.incomingLinks.get(2);
+        neuron.incomingLinks.get(2).weight = incomingLink.weight + 0.9 * (input.getEnemies() - incomingLink.weight);
+
+        incomingLink = neuron.incomingLinks.get(3);
+        neuron.incomingLinks.get(3).weight = incomingLink.weight + 0.9 * (input.getArmor() - incomingLink.weight);
+    }
+
+    public void bulkNewStudy(List<PlayerStateRule> input, int correctAnswer) {
+        for (PlayerStateRule playerState : input) {
+            newStudy(playerState, correctAnswer);
         }
     }
 
-    public void newStudy(PlayerState input, int correctAnswer) {
-        Neuron neuron = neurons[correctAnswer];
-        Link incomingLink = neuron.incomingLinks.get(0);
-        neuron.incomingLinks.get(0).weight = incomingLink.weight + 0.95 * (input.getHealth() - incomingLink.weight);
-
-        incomingLink = neuron.incomingLinks.get(1);
-        neuron.incomingLinks.get(1).weight = incomingLink.weight + 0.95 * (input.isGun() ? 1 : 0 - incomingLink.weight);
-
-        incomingLink = neuron.incomingLinks.get(2);
-        neuron.incomingLinks.get(2).weight = incomingLink.weight + 0.95 * (input.getEnemies() - incomingLink.weight);
-
-        incomingLink = neuron.incomingLinks.get(3);
-        neuron.incomingLinks.get(3).weight = incomingLink.weight + 0.95 * (input.getArmor() - incomingLink.weight);
-    }
-
-    public void bulkNewStudy(List<PlayerState> input, int correctAnswer) {
-        for (PlayerState playerState : input) {
-            newStudy(playerState, correctAnswer);
+    public void bulkStudy(List<PlayerStateRule> input) {
+        for (PlayerStateRule playerState : input) {
+            study(playerState);
         }
     }
 

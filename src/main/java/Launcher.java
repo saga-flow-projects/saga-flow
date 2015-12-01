@@ -1,86 +1,46 @@
-import com.demosoft.investiogation.neuronlan.Input;
+import com.demosoft.investiogation.neuronlan.entity.Input;
 import com.demosoft.investiogation.neuronlan.KohonenNetwork;
-import com.demosoft.investiogation.neuronlan.Neuron;
-import com.demosoft.investiogation.neuronlan.PlayerState;
+import com.demosoft.investiogation.neuronlan.entity.Neuron;
+import com.demosoft.investiogation.neuronlan.entity.PlayerStateRule;
+import com.demosoft.investiogation.neuronlan.rule.StateProvider;
+import com.demosoft.investiogation.neuronlan.rule.csv.CsvStateProvider;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Andrii_Korkoshko on 30.11.2015.
  */
 public class Launcher {
 
-
-    public static final int ATTACK = 0;
-    public static final int ESCAPE = 1;
-    public static final int HIDE = 2;
-    public static final int NONE = 3;
-    public static final int DEFENCE = 4;
-
     public static void main(String[] args) {
         Input[] inputs = new Input[4];
         Neuron[] neurons = new Neuron[5];
-        Random random = new Random();
-        for (int i = 0; i < neurons.length; i++) {
-            Neuron neuron = new Neuron();
-            neuron.setPower(0);
-            neuron.action = i;
-            neurons[i] = neuron;
-        }
-        for (int i = 0; i < inputs.length; i++) {
-            Input input = new Input();
-            createLinks(input, neurons);
-            inputs[i] = input;
-        }
-        linkInputWithNeurin(inputs, neurons);
+        initNeurons(neurons);
+        initInputs(inputs, neurons);
 
         KohonenNetwork network = new KohonenNetwork(inputs, neurons);
-        List<PlayerState> playerAtackStates = new ArrayList<>();
-        playerAtackStates.add(new PlayerState(50, true, 1, 0.0));
-        playerAtackStates.add(new PlayerState(90, true, 2, 0.0));
-        playerAtackStates.add(new PlayerState(80, false, 1, 0.0));
+        StateProvider stateProvider = new CsvStateProvider("startStatus.csv");
+        stateProvider.getRules();
+        network.bulkStudy(stateProvider.getRules());
 
-        List<PlayerState> playerHideStates = new ArrayList<>();
-        playerHideStates.add(new PlayerState(30, true, 1, 0.0));
-        playerHideStates.add(new PlayerState(60, true, 2, 0.0));
-        playerHideStates.add(new PlayerState(40, false, 1, 0.0));
-        playerHideStates.add(new PlayerState(45, false, 1, 0.0));
-        playerHideStates.add(new PlayerState(40, false, 1, 0.0));
+        List<PlayerStateRule> playerTestStates = new ArrayList<>();
+        playerTestStates.add(new PlayerStateRule(100, false, 1, 0.0));
+        playerTestStates.add(new PlayerStateRule(90, true, 3, 0.0));
+        playerTestStates.add(new PlayerStateRule(30, false, 8, 0.0));
+        playerTestStates.add(new PlayerStateRule(100, true, 8, 0.0));
+        playerTestStates.add(new PlayerStateRule(100, false, 0, 0.0));
 
-        List<PlayerState> playerEscapeStates = new ArrayList<>();
-        playerEscapeStates.add(new PlayerState(90, true, 7, 0.0));
-        playerEscapeStates.add(new PlayerState(60, true, 4, 0.0));
-        playerEscapeStates.add(new PlayerState(10, false, 1, 0.0));
+        playerTestStates.add(new PlayerStateRule(40, false, 1, 1.0));
+        playerTestStates.add(new PlayerStateRule(50, false, 3, 1.0));
 
-        List<PlayerState> playerNoneStates = new ArrayList<>();
-        playerNoneStates.add(new PlayerState(60, true, 0, 0.0));
-        playerNoneStates.add(new PlayerState(100, false, 0, 0.0));
+        playerTestStates.add(new PlayerStateRule(50, false, 0, 1.0));
+        processResults(playerTestStates, network);
 
+    }
 
-        List<PlayerState> playerDefenceStates = new ArrayList<>();
-        playerDefenceStates.add(new PlayerState(50, false, 3, 1.0));
-        playerDefenceStates.add(new PlayerState(70, true, 2, 0.7));
-        playerDefenceStates.add(new PlayerState(60, true, 1, 0.6));
-        playerDefenceStates.add(new PlayerState(100, true, 1, 0.5));
-
-        network.bulkNewStudy(playerAtackStates, ATTACK);
-        network.bulkNewStudy(playerEscapeStates, ESCAPE);
-        network.bulkNewStudy(playerHideStates, HIDE);
-        network.bulkNewStudy(playerNoneStates, NONE);
-        network.bulkNewStudy(playerDefenceStates, DEFENCE);
-
-        List<PlayerState> playerTestStates = new ArrayList<>();
-        playerTestStates.add(new PlayerState(100, false, 1, 0.0));
-        playerTestStates.add(new PlayerState(90, true, 3, 0.0));
-        playerTestStates.add(new PlayerState(30, false, 8, 0.0));
-        playerTestStates.add(new PlayerState(100, true, 8, 0.0));
-        playerTestStates.add(new PlayerState(100, false, 0, 0.0));
-
-        playerTestStates.add(new PlayerState(40, false, 1, 1.0));
-
-        for (PlayerState playerState : playerTestStates) {
+    public static void processResults(List<PlayerStateRule> playerTestStates, KohonenNetwork network) {
+        for (PlayerStateRule playerState : playerTestStates) {
 
             int index = network.newHandle(playerState);
 
@@ -112,9 +72,20 @@ public class Launcher {
         }
     }
 
-    public static void linkInputWithNeurin(Input[] inputs, Neuron[] neurons) {
-
+    public static void initNeurons(Neuron[] neurons) {
+        for (int i = 0; i < neurons.length; i++) {
+            Neuron neuron = new Neuron();
+            neuron.setPower(0);
+            neuron.action = i;
+            neurons[i] = neuron;
+        }
     }
 
-
+    public static void initInputs(Input[] inputs, Neuron[] neurons) {
+        for (int i = 0; i < inputs.length; i++) {
+            Input input = new Input();
+            createLinks(input, neurons);
+            inputs[i] = input;
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.demosoft.investiogation.neuronlan;
+package com.demosoft.investiogation.neuronlan.entity;
 
 /**
  * Created by Andrii_Korkoshko on 30.11.2015.

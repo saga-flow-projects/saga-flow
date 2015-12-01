@@ -1,4 +1,4 @@
-package com.demosoft.investiogation.neuronlan;
+package com.demosoft.investiogation.neuronlan.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
