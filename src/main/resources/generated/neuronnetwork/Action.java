@@ -6,10 +6,8 @@
 //
 
 
-package com.demosoft.investiogation.neuronlan.xml.generated.network;
+package neuronnetwork;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -17,18 +15,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Input complex type.
+ * <p>Java class for Action complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Input">
+ * &lt;complexType name="Action">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="outgoingLinks" type="{urn:neuronNetwork}Link" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -37,43 +35,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Input", propOrder = {
-    "outgoingLinks"
-})
-public class Input {
+@XmlType(name = "Action")
+public class Action {
 
-    protected List<Link> outgoingLinks;
     @XmlAttribute(name = "id", required = true)
     protected String id;
-
-    /**
-     * Gets the value of the outgoingLinks property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the outgoingLinks property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getOutgoingLinks().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Link }
-     * 
-     * 
-     */
-    public List<Link> getOutgoingLinks() {
-        if (outgoingLinks == null) {
-            outgoingLinks = new ArrayList<Link>();
-        }
-        return this.outgoingLinks;
-    }
+    @XmlAttribute(name = "name", required = true)
+    protected String name;
 
     /**
      * Gets the value of the id property.
@@ -97,6 +65,30 @@ public class Input {
      */
     public void setId(String value) {
         this.id = value;
+    }
+
+    /**
+     * Gets the value of the name property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the value of the name property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setName(String value) {
+        this.name = value;
     }
 
 }

@@ -6,27 +6,30 @@
 //
 
 
-package com.demosoft.investiogation.neuronlan.xml.generated.network;
+package neuronnetwork;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Input complex type.
+ * <p>Java class for Neuron complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Input">
+ * &lt;complexType name="Neuron">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="outgoingLinks" type="{urn:neuronNetwork}Link" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="initPower" type="{http://www.w3.org/2001/XMLSchema}double" minOccurs="0"/>
+ *         &lt;element name="processor" type="{urn:neuronNetwork}Processor"/>
  *       &lt;/sequence>
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
@@ -37,12 +40,17 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Input", propOrder = {
-    "outgoingLinks"
+@XmlType(name = "Neuron", propOrder = {
+    "outgoingLinks",
+    "initPower",
+    "processor"
 })
-public class Input {
+public class Neuron {
 
     protected List<Link> outgoingLinks;
+    protected Double initPower;
+    @XmlElement(required = true)
+    protected Processor processor;
     @XmlAttribute(name = "id", required = true)
     protected String id;
 
@@ -73,6 +81,54 @@ public class Input {
             outgoingLinks = new ArrayList<Link>();
         }
         return this.outgoingLinks;
+    }
+
+    /**
+     * Gets the value of the initPower property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Double }
+     *     
+     */
+    public Double getInitPower() {
+        return initPower;
+    }
+
+    /**
+     * Sets the value of the initPower property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Double }
+     *     
+     */
+    public void setInitPower(Double value) {
+        this.initPower = value;
+    }
+
+    /**
+     * Gets the value of the processor property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Processor }
+     *     
+     */
+    public Processor getProcessor() {
+        return processor;
+    }
+
+    /**
+     * Sets the value of the processor property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Processor }
+     *     
+     */
+    public void setProcessor(Processor value) {
+        this.processor = value;
     }
 
     /**

@@ -6,7 +6,7 @@
 //
 
 
-package com.demosoft.investiogation.neuronlan.xml.generated.network;
+package neuronnetwork;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;

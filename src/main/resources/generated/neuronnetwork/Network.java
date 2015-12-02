@@ -6,7 +6,7 @@
 //
 
 
-package com.demosoft.investiogation.neuronlan.xml.generated.network;
+package neuronnetwork;
 
 import java.util.ArrayList;
 import java.util.List;

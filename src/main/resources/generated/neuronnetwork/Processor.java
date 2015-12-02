@@ -6,7 +6,7 @@
 //
 
 
-package com.demosoft.investiogation.neuronlan.xml.generated.network;
+package neuronnetwork;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,18 +17,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Input complex type.
+ * <p>Java class for Processor complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Input">
+ * &lt;complexType name="Processor">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="outgoingLinks" type="{urn:neuronNetwork}Link" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="param" type="{urn:neuronNetwork}Parameter" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="className" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -37,66 +37,66 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Input", propOrder = {
-    "outgoingLinks"
+@XmlType(name = "Processor", propOrder = {
+    "param"
 })
-public class Input {
+public class Processor {
 
-    protected List<Link> outgoingLinks;
-    @XmlAttribute(name = "id", required = true)
-    protected String id;
+    protected List<Parameter> param;
+    @XmlAttribute(name = "className", required = true)
+    protected String className;
 
     /**
-     * Gets the value of the outgoingLinks property.
+     * Gets the value of the param property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the outgoingLinks property.
+     * This is why there is not a <CODE>set</CODE> method for the param property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getOutgoingLinks().add(newItem);
+     *    getParam().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Link }
+     * {@link Parameter }
      * 
      * 
      */
-    public List<Link> getOutgoingLinks() {
-        if (outgoingLinks == null) {
-            outgoingLinks = new ArrayList<Link>();
+    public List<Parameter> getParam() {
+        if (param == null) {
+            param = new ArrayList<Parameter>();
         }
-        return this.outgoingLinks;
+        return this.param;
     }
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the className property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getId() {
-        return id;
+    public String getClassName() {
+        return className;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the className property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setId(String value) {
-        this.id = value;
+    public void setClassName(String value) {
+        this.className = value;
     }
 
 }

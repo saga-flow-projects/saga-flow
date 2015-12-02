@@ -6,7 +6,7 @@
 //
 
 
-package com.demosoft.investiogation.neuronlan.xml.generated.network;
+package neuronnetwork;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,16 +15,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Output complex type.
+ * <p>Java class for Parameter complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Output">
+ * &lt;complexType name="Parameter">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="actionId" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="value" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -33,60 +33,60 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Output")
-public class Output {
+@XmlType(name = "Parameter")
+public class Parameter {
 
-    @XmlAttribute(name = "id", required = true)
-    protected String id;
-    @XmlAttribute(name = "actionId", required = true)
-    protected String actionId;
+    @XmlAttribute(name = "name", required = true)
+    protected String name;
+    @XmlAttribute(name = "value", required = true)
+    protected String value;
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setId(String value) {
-        this.id = value;
+    public void setName(String value) {
+        this.name = value;
     }
 
     /**
-     * Gets the value of the actionId property.
+     * Gets the value of the value property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getActionId() {
-        return actionId;
+    public String getValue() {
+        return value;
     }
 
     /**
-     * Sets the value of the actionId property.
+     * Sets the value of the value property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setActionId(String value) {
-        this.actionId = value;
+    public void setValue(String value) {
+        this.value = value;
     }
 
 }

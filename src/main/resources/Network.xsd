@@ -15,7 +15,7 @@
 
     <xsd:complexType name="Neuron">
         <xsd:sequence>
-            <xsd:element name="outgoingLinks" type="ntw:Link" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="outgoingLinks" type="ntw:Link" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="initPower" type="xsd:double" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="processor" type="ntw:Processor" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
@@ -31,7 +31,7 @@
 
     <xsd:complexType name="Input">
         <xsd:sequence>
-            <xsd:element name="outgoingLinks" type="ntw:Link" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="outgoingLinks" type="ntw:Link" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
         <xsd:attribute name="id" type="xsd:string" use="required"/>
     </xsd:complexType>

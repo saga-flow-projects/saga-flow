@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "urn:neuronNetwork")
-package com.demosoft.investiogation.neuronlan.xml.generated.network;
+package neuronnetwork;
