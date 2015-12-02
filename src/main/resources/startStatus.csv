@@ -1,4 +1,4 @@
-#action,health,gun,enemies,armor
+action,health,gun,enemies,armor
 0,0.50,true,1,0.0
 0,0.90,true,2,0.0
 0,0.80,false,1,0.0

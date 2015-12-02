@@ -5,10 +5,7 @@ import com.demosoft.investiogation.neuronlan.rule.StateProvider;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +25,13 @@ public class CsvStateProvider implements StateProvider {
         try {
             Reader in = new InputStreamReader(this.getClass().getClassLoader()
                     .getResourceAsStream(file));
+            BufferedReader bufferedReader = new BufferedReader(in);
+            String[] headers =  bufferedReader.readLine().split(",");
 
             CSVFormat format = CSVFormat.DEFAULT;
-            format = format.withHeader("action", "health", "gun", "enemies", "armor");
+            format = format.withHeader(headers);
             format = format.withCommentMarker('#');
-            Iterable<CSVRecord> records = format.parse(in);
+            Iterable<CSVRecord> records = format.parse(bufferedReader);
             for (CSVRecord record : records) {
                 PlayerStateRule newRule = new PlayerStateRule();
                 newRule.setAction(PlayerStateRule.Action.getByCode(Integer.parseInt(record.get("action"))));
