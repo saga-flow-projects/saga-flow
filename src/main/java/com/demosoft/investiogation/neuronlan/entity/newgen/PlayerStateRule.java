@@ -1,35 +1,14 @@
-package com.demosoft.investiogation.neuronlan.entity;
+package com.demosoft.investiogation.neuronlan.entity.newgen;
+
+import com.demosoft.investiogation.neuronlan.entity.StateRule;
+
+import java.util.List;
 
 /**
- * Created by Andrii_Korkoshko on 30.11.2015.
+ * Created by Andrii_Korkoshko on 05.12.2015.
  */
-public class PlayerStateRule {
+public class PlayerStateRule implements StateRule {
 
-    public enum Action {
-        ATTACK(0), ESCAPE(1), HIDE(2), NONE(3), DEFENCE(4);
-        private int code;
-
-        Action(int code) {
-            this.code = code;
-        }
-
-        public int getCode() {
-            return code;
-        }
-
-        public void setCode(int code) {
-            this.code = code;
-        }
-
-        public static Action getByCode(int code) {
-            for (Action action : Action.values()) {
-                if (action.getCode() == code) {
-                    return action;
-                }
-            }
-            return null;
-        }
-    }
 
     private double health;
     private double armor;
@@ -92,9 +71,19 @@ public class PlayerStateRule {
         this.armor = armor;
     }
 
+    @Override
     public Action getAction() {
-
         return action;
+    }
+
+    @Override
+    public Object getValue(String key) {
+        return null;
+    }
+
+    @Override
+    public List<String> getKeys() {
+        return null;
     }
 
     public void setAction(Action action) {

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Andrii_Korkoshko on 01.12.2015.
  */
-public class PlayerBrain {
+public class PlayerBrain implements Brain{
 
     private List<Input> inputs;
     private List<Neuron> neurons;
