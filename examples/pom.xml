@@ -6,7 +6,10 @@
         <artifactId>saga-flow-parent</artifactId>
         <version>1.0.0</version>
     </parent>
+    <artifactId>examples</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>core-examles</module>
+    </modules>
 
-    <artifactId>core</artifactId>
-    <name>core</name>
 </project>

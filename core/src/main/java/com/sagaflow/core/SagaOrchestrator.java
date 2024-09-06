@@ -1,31 +1,39 @@
 package com.sagaflow.core;
 
+import com.sagaflow.core.steps.SagaStep;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class SagaOrchestrator {
 
+    private static final Logger logger = LoggerFactory.getLogger(SagaOrchestrator.class);
     private final List<SagaStep> steps = new ArrayList<>();
 
     public void addStep(SagaStep step) {
         steps.add(step);
     }
 
-    public void executeSaga() {
-        try {
-            for (SagaStep step : steps) {
-                step.execute();
+    public SagaResult executeSaga(SagaContext context) {
+        logger.info("Starting saga execution...");
+        for (SagaStep step : steps) {
+            try {
+                step.execute(context);
+            } catch (SagaException e) {
+                logger.error("Error executing step: {}, rolling back.", step.getClass().getSimpleName(), e);
+                rollbackSaga(context);
+                return new SagaResult(false, e.getMessage());
             }
-        } catch (Exception e) {
-            System.out.println("Error occurred: " + e.getMessage());
-            rollbackSaga();
         }
+        return new SagaResult(true, "Saga executed successfully.");
     }
 
-    private void rollbackSaga() {
-        System.out.println("Rolling back the saga...");
+    private void rollbackSaga(SagaContext context) {
         for (SagaStep step : steps) {
-            step.rollback();
+            step.rollback(context);
         }
     }
 }
