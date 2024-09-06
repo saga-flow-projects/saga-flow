@@ -1,4 +1,4 @@
-package com.sagaflow.core;
+package com.github.sagaflow.core;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -6,7 +6,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.sagaflow.core.steps.SagaStep;
+import com.github.sagaflow.core.steps.SagaStep;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

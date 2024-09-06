@@ -1,10 +1,10 @@
-package com.sagaflow.core.example;
+package com.github.sagaflow.core.example;
 
-import com.sagaflow.core.SagaContext;
-import com.sagaflow.core.SagaOrchestrator;
-import com.sagaflow.core.SagaResult;
-import com.sagaflow.core.example.steps.PaymentCompensationStep;
-import com.sagaflow.core.example.steps.PaymentSagaStep;
+import com.github.sagaflow.core.SagaContext;
+import com.github.sagaflow.core.SagaOrchestrator;
+import com.github.sagaflow.core.SagaResult;
+import com.github.sagaflow.core.example.steps.PaymentCompensationStep;
+import com.github.sagaflow.core.example.steps.PaymentSagaStep;
 
 public class SagaFlowCoreApplication {
 

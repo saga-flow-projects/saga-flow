@@ -1,6 +1,6 @@
-package com.sagaflow.core;
+package com.github.sagaflow.core;
 
-import com.sagaflow.core.steps.SagaStep;
+import com.github.sagaflow.core.steps.SagaStep;
 import lombok.Getter;
 
 import java.util.HashMap;

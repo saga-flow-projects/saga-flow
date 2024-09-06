@@ -1,4 +1,4 @@
-package com.sagaflow.core;
+package com.github.sagaflow.core;
 
 import lombok.Value;
 

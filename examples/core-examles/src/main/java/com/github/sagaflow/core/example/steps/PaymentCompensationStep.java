@@ -1,8 +1,8 @@
-package com.sagaflow.core.example.steps;
+package com.github.sagaflow.core.example.steps;
 
-import com.sagaflow.core.CompensationContext;
-import com.sagaflow.core.SagaContext;
-import com.sagaflow.core.steps.CompensationStep;
+import com.github.sagaflow.core.CompensationContext;
+import com.github.sagaflow.core.SagaContext;
+import com.github.sagaflow.core.steps.CompensationStep;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

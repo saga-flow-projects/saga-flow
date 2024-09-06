@@ -1,4 +1,4 @@
-package com.sagaflow.core;
+package com.github.sagaflow.core;
 
 public class SagaException extends Exception {
     public SagaException(String message) {

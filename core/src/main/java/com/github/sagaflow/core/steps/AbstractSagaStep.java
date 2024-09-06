@@ -1,7 +1,7 @@
-package com.sagaflow.core.steps;
+package com.github.sagaflow.core.steps;
 
-import com.sagaflow.core.SagaContext;
-import com.sagaflow.core.SagaException;
+import com.github.sagaflow.core.SagaContext;
+import com.github.sagaflow.core.SagaException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
