@@ -4,7 +4,7 @@ import com.sagaflow.core.steps.SagaStep;
 
 public interface SagaMetrics {
 
-    void recordSuccess(SagaStep step);
+    default void recordSuccess(SagaStep step){};
 
-    void recordFailure(SagaStep step);
+   default void recordFailure(SagaStep step){};
 }

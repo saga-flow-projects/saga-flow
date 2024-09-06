@@ -13,16 +13,17 @@ public class RetryErrorHandlingStrategy implements SagaErrorHandlingStrategy {
     }
 
     @Override
-    public void handle(SagaContext context, SagaStep step, Exception exception) {
+    public void handle(SagaContext context, SagaStep step, Exception exception) throws SagaErrorNotHandledException {
         for (int i = 0; i < maxRetries; i++) {
             try {
                 step.execute(context);
-                return;
+                return; // Step executed successfully, no need for retries
             } catch (SagaException e) {
-                log.debug("Retry attempt {} failed.", i + 1);
+                log.debug("Retry attempt {} failed for step: {}", i + 1, step.getClass().getSimpleName());
+                if (i == maxRetries - 1) {
+                    throw new SagaErrorNotHandledException("Step execution failed after retries: " + e.getMessage(), e);
+                }
             }
         }
-        log.error("Max retries reached, rolling back.");
-        step.rollback(context);
     }
 }

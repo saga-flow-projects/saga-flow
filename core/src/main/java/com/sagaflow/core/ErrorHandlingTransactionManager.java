@@ -16,7 +16,7 @@ public class ErrorHandlingTransactionManager extends TransactionManager {
         // Custom error handling initialization
     }
 
-    public void handleError(SagaContext context, SagaStep step, Exception e) {
+    public void handleError(SagaContext context, SagaStep step, Exception e) throws SagaErrorNotHandledException {
         errorStrategy.handle(context, step, e);
     }
 }

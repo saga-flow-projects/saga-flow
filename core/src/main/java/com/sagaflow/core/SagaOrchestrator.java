@@ -14,6 +14,9 @@ public class SagaOrchestrator {
     private static final Logger logger = LoggerFactory.getLogger(SagaOrchestrator.class);
     private final List<SagaStep> steps = new ArrayList<>();
     private final List<CompensationStep> compensationSteps = new ArrayList<>();
+    private final StepExecutor stepExecutor = new StepExecutor();
+    private final SagaMetrics sagaMetrics = new SagaMetrics(){};
+
 
     public void addStep(SagaStep step) {
         steps.add(step);
@@ -31,9 +34,11 @@ public class SagaOrchestrator {
         for (int i = 0; i < steps.size(); i++) {
             SagaStep step = steps.get(i);
             try {
-                step.execute(context);
+                stepExecutor.executeStep(step, context); // Using StepExecutor for step execution
+                sagaMetrics.recordSuccess(step); // Recording success in metrics
             } catch (SagaException e) {
                 logger.error("Error executing step: {}, starting compensation.", step.getClass().getSimpleName(), e);
+                sagaMetrics.recordFailure(step); // Recording failure in metrics
                 compensationContext.setReason(e.getMessage());
                 rollbackSaga(context, compensationContext, i);
                 return new SagaResult(false, e.getMessage());
