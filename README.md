@@ -1,4 +1,5 @@
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=saga-flow-projects_saga-flow&metric=alert_status)](https://sonarcloud.io/dashboard?id=saga-flow-projects_saga-flow)
 
 # SagaFlow
 
