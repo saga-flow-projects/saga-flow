@@ -1,6 +1,6 @@
 package com.sagaflow.core;
 
-public class SagaErrorNotHandledException extends Exception {
+public class SagaErrorNotHandledException extends SagaException {
     public SagaErrorNotHandledException(String message) {
         super(message);
     }

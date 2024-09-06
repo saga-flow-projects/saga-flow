@@ -1,20 +1,18 @@
 package com.sagaflow.core;
 
 import com.sagaflow.core.steps.SagaStep;
+import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public class SagaState {
 
     private final Map<SagaStep, StepStatus> stepStatuses = new HashMap<>();
 
     public void updateStepStatus(SagaStep step, StepStatus status) {
         stepStatuses.put(step, status);
-    }
-
-    public Map<SagaStep, StepStatus> getStepStatuses() {
-        return stepStatuses;
     }
 
     public boolean isComplete() {
