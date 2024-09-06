@@ -1,1 +1,0 @@
-xjc -d generated Network.xsd
