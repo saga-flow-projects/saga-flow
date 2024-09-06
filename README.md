@@ -1,3 +1,4 @@
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.saga-flow-projects/core.svg?label=Maven%20Central)](https://search.maven.org/artifact/io.github.saga-flow-projects/core/1.0.0)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=saga-flow-projects_saga-flow&metric=alert_status)](https://sonarcloud.io/dashboard?id=saga-flow-projects_saga-flow)
 
@@ -26,8 +27,8 @@ Add the following dependency to your `pom.xml` file:
 
 ```xml
 <dependency>
-    <groupId>com.github.sagaflow</groupId>
-    <artifactId>sagaflow-core</artifactId>
+    <groupId>io.github.saga-flow-projects</groupId>
+    <artifactId>core</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```
