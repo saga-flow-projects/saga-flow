@@ -1,6 +1,5 @@
 package com.github.sagaflow.eventStream.event;
 
-import com.github.sagaflow.eventStream.DomainEvent;
 import lombok.Getter;
 
 @Getter

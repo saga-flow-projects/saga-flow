@@ -10,7 +10,7 @@ public class ExampleStep2 implements SagaStep {
     @Override
     public void execute(SagaContext context) throws SagaException {
         log.info("Executing step: {}", this.getClass().getSimpleName());
-        throw new RuntimeException("Failed to execute step: " + this.getClass().getSimpleName());
+        throw new SagaException("Failed to execute step: " + this.getClass().getSimpleName());
     }
 
     @Override

@@ -17,7 +17,8 @@ public class SagaOrchestrator {
     private final List<SagaStep> steps = new ArrayList<>();
     private final List<CompensationStep> compensationSteps = new ArrayList<>();
     private final StepExecutor stepExecutor;
-    private final SagaMetrics sagaMetrics = new SagaMetrics(){};
+    private final SagaMetrics sagaMetrics = new SagaMetrics() {
+    };
     private final SagaState sagaState = new SagaState();
     private final SagaTimeoutManager timeoutManager = new SagaTimeoutManager();  // Added SagaTimeoutManager
     private final List<SagaEventListener> listeners = new ArrayList<>();
@@ -57,6 +58,18 @@ public class SagaOrchestrator {
         CompensationContext compensationContext = new CompensationContext();
         compensationContext.setTransactionId(context.getTransactionId());
 
+        try {
+            SagaResult context1 = executeSage(context, compensationContext);
+            if (context1 != null) return context1;
+        } finally {
+            timeoutManager.stopScheduler();
+        }
+        notifySagaCompleted(context);
+
+        return new SagaResult(true, "Saga executed successfully.");
+    }
+
+    private SagaResult executeSage(SagaContext context, CompensationContext compensationContext) {
         for (int i = 0; i < steps.size(); i++) {
             SagaStep step = steps.get(i);
             AtomicBoolean isCompleted = new AtomicBoolean(false);
@@ -73,27 +86,27 @@ public class SagaOrchestrator {
                 notifyStepCompleted(context, step);
                 sagaState.updateStepStatus(step, StepStatus.COMPLETED);
             } catch (SagaException e) {
-                logger.error("Error executing step: {}, starting compensation.", step.getClass().getSimpleName(), e);
-                sagaState.updateStepStatus(step, StepStatus.FAILED);
-                sagaMetrics.recordFailure(step);
-                notifyStepFailed(context, step, e);
-
-                compensationContext.setReason(e.getMessage());
-
-                if (timeoutTask != null && !timeoutTask.isDone()) {
-                    timeoutTask.cancel(true);
-                }
-
-                rollbackSaga(context, compensationContext, i);
-                notifySagaFailed(context, e);
-                return new SagaResult(false, e.getMessage());
-            } finally {
-                timeoutManager.stopScheduler();
+                return haandleSagaError(context, e, step, compensationContext, timeoutTask, i);
             }
         }
-        notifySagaCompleted(context);
-        timeoutManager.stopScheduler();
-        return new SagaResult(true, "Saga executed successfully.");
+        return null;
+    }
+
+    private SagaResult haandleSagaError(SagaContext context, SagaException e, SagaStep step, CompensationContext compensationContext, ScheduledFuture<?> timeoutTask, int i) {
+        logger.error("Error executing step: {}, starting compensation.", step.getClass().getSimpleName(), e);
+        sagaState.updateStepStatus(step, StepStatus.FAILED);
+        sagaMetrics.recordFailure(step);
+        notifyStepFailed(context, step, e);
+
+        compensationContext.setReason(e.getMessage());
+
+        if (timeoutTask != null && !timeoutTask.isDone()) {
+            timeoutTask.cancel(true);
+        }
+
+        rollbackSaga(context, compensationContext, i);
+        notifySagaFailed(context, e);
+        return new SagaResult(false, e.getMessage());
     }
 
     private void rollbackSaga(SagaContext context, CompensationContext compensationContext, int failedStepIndex) {
