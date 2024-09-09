@@ -9,4 +9,5 @@
 
     <artifactId>core</artifactId>
     <name>core</name>
+    <packaging>jar</packaging>
 </project>

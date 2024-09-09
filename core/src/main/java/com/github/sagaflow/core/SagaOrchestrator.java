@@ -20,6 +20,7 @@ public class SagaOrchestrator {
     private final SagaMetrics sagaMetrics = new SagaMetrics(){};
     private final SagaState sagaState = new SagaState();
     private final SagaTimeoutManager timeoutManager = new SagaTimeoutManager();  // Added SagaTimeoutManager
+    private final List<SagaEventListener> listeners = new ArrayList<>();
 
 
     public SagaOrchestrator() {
@@ -31,6 +32,10 @@ public class SagaOrchestrator {
                 ),
                 new SagaRetryManager(3)
         );
+    }
+
+    public void addEventListener(SagaEventListener listener) {
+        listeners.add(listener);
     }
 
     public SagaOrchestrator(SagaErrorHandlingStrategy errorHandlingStrategy) {
@@ -65,23 +70,28 @@ public class SagaOrchestrator {
                     timeoutTask.cancel(true);
                 }
                 sagaMetrics.recordSuccess(step);
+                notifyStepCompleted(context, step);
                 sagaState.updateStepStatus(step, StepStatus.COMPLETED);
             } catch (SagaException e) {
                 logger.error("Error executing step: {}, starting compensation.", step.getClass().getSimpleName(), e);
                 sagaState.updateStepStatus(step, StepStatus.FAILED);
-                sagaMetrics.recordFailure(step); // Recording failure in metrics
-                compensationContext.setReason(e.getMessage());
+                sagaMetrics.recordFailure(step);
+                notifyStepFailed(context, step, e);
 
+                compensationContext.setReason(e.getMessage());
 
                 if (timeoutTask != null && !timeoutTask.isDone()) {
                     timeoutTask.cancel(true);
                 }
 
-
                 rollbackSaga(context, compensationContext, i);
+                notifySagaFailed(context, e);
                 return new SagaResult(false, e.getMessage());
+            } finally {
+                timeoutManager.stopScheduler();
             }
         }
+        notifySagaCompleted(context);
         timeoutManager.stopScheduler();
         return new SagaResult(true, "Saga executed successfully.");
     }
@@ -93,6 +103,30 @@ public class SagaOrchestrator {
                 CompensationStep compensationStep = compensationSteps.get(i);
                 compensationStep.compensate(context, compensationContext);
             }
+        }
+    }
+
+    private void notifyStepCompleted(SagaContext context, SagaStep step) {
+        for (SagaEventListener listener : listeners) {
+            listener.onStepCompleted(context, step);
+        }
+    }
+
+    private void notifyStepFailed(SagaContext context, SagaStep step, Exception exception) {
+        for (SagaEventListener listener : listeners) {
+            listener.onStepFailed(context, step, exception);
+        }
+    }
+
+    private void notifySagaCompleted(SagaContext context) {
+        for (SagaEventListener listener : listeners) {
+            listener.onSagaCompleted(context);
+        }
+    }
+
+    private void notifySagaFailed(SagaContext context, Exception exception) {
+        for (SagaEventListener listener : listeners) {
+            listener.onSagaFailed(context, exception);
         }
     }
 }

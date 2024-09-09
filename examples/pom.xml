@@ -12,6 +12,7 @@
 
     <modules>
         <module>core-examles</module>
+        <module>event-stream-examples</module>
     </modules>
 
 </project>
